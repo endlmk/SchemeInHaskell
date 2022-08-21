@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      SimpleParser
   other-modules:
       Paths_SchemeInHaskell
   hs-source-dirs:
@@ -51,7 +51,7 @@ test-suite SchemeInHaskell-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      LibSpec
+      SimpleParserSpec
       Paths_SchemeInHaskell
   hs-source-dirs:
       test

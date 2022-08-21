@@ -1,6 +1,6 @@
 module Main (main) where
 
-import Lib
+import SimpleParser
 
 main :: IO ()
-main = someFunc
+main = putStrLn "test"
