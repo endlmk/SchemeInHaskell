@@ -7,6 +7,8 @@ import SimpleParser
 spec :: Spec
 spec = do
     describe "TestCase" $ do
-        it "parses empty string" $ do
-            parse "" `shouldBe` Atom (Symbol "")
-            -- (1 + 2) `shouldBe` 3
+        it "parses string" $ do
+            parseExpression "test" `shouldBe` Right (Atom (Symbol "test"))
+        it "parses number" $ do
+            parseExpression "123" `shouldBe` Right (Atom (Number 123))
+
