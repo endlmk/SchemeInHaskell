@@ -1,33 +1,31 @@
+{-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module SimpleParser
-    ( parseExpression, Atom(Symbol, Number), LispVal(Atom, List)
-    ) where
-import Prelude (String, Double, Show, Eq, Monad (return), read, Either, Char, Integer)
--- import Text.ParserCombinators.Parsec ( letter, many, Parser )
-import Text.Parsec
-import Text.Parsec.Text
-import Data.Either
+  ( parseExpression,
+    LispVal (Atom, Number),
+  )
+where
 
 import Data.Text (pack)
+import Data.Text qualified as T
+import Text.Parsec
+import Text.Parsec.Text
 
-data Atom = Symbol String
-          | Number Double
-          deriving (Eq, Show)
+data LispVal
+  = Atom T.Text
+  | Number Integer
+  deriving (Eq, Show)
 
-data LispVal = Atom Atom
-             | List [LispVal]
-             deriving (Eq, Show)
-
-
-symbol :: Parser LispVal
-symbol = do sym <- many1 letter
-            return (Atom (Symbol sym))
+atom :: Parser LispVal
+atom = do
+  sym <- many1 letter
+  return (Atom (T.pack sym))
 
 number :: Parser LispVal
-number = do num <- many1 digit
-            return (Atom (Number (read num :: Double)))
+number = do
+  num <- many1 digit
+  return (Number (read num :: Integer))
 
 parseExpression :: String -> Either ParseError LispVal
-parseExpression s = parse (symbol <|> number) "error" (pack s)
-
+parseExpression s = parse (atom <|> number) "error" (pack s)
