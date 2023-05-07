@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module SimpleParserSpec (spec) where
+module ParserSpec (spec) where
 
-import SimpleParser
+import Parser
 import Test.Hspec
 
 -- import Prelude (String, Double)

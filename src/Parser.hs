@@ -1,7 +1,7 @@
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module SimpleParser
+module Parser
   ( parseExpression,
     LispVal (Atom, Number),
   )
