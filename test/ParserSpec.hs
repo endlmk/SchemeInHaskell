@@ -14,3 +14,5 @@ spec = do
       parseExpression "test" `shouldBe` Right (Atom "test")
     it "parses number" $ do
       parseExpression "123" `shouldBe` Right (Number 123)
+    it "parses negative number" $ do
+      parseExpression "-2187" `shouldBe` Right (Number (-2187))

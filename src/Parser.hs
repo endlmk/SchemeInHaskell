@@ -27,5 +27,11 @@ number = do
   num <- many1 digit
   return (Number (read num :: Integer))
 
+negNumber :: Parser LispVal
+negNumber = do
+  _ <- char '-'
+  num <- many1 digit
+  return (Number ((read num :: Integer) * (-1)))
+
 parseExpression :: String -> Either ParseError LispVal
-parseExpression s = parse (atom <|> number) "error" (pack s)
+parseExpression s = parse (atom <|> number <|> negNumber) "error" (pack s)
