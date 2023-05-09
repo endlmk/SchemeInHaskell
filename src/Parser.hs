@@ -3,13 +3,12 @@
 
 module Parser
   ( parseExpression,
-    LispVal (Atom, Number, String),
+    LispVal (Atom, Number, String, Bool),
   )
 where
 
 import Data.Text (pack)
 import Data.Text qualified as T
-import GHC.Float (fromRat'')
 import Text.Parsec
 import Text.Parsec.Text
 
@@ -17,6 +16,7 @@ data LispVal
   = Atom T.Text
   | Number Integer
   | String T.Text
+  | Bool Bool
   deriving (Eq, Show)
 
 atom :: Parser LispVal
@@ -42,5 +42,20 @@ parseString = do
   _ <- char '\"'
   return (String (T.pack str))
 
+parseBool :: Parser LispVal
+parseBool = do
+  _ <- char '#'
+  c <- oneOf "tf"
+  return (Bool (c == 't'))
+
 parseExpression :: String -> Either ParseError LispVal
-parseExpression s = parse (atom <|> number <|> negNumber <|> parseString) "error" (pack s)
+parseExpression s =
+  parse
+    ( atom
+        <|> number
+        <|> negNumber
+        <|> parseString
+        <|> parseBool
+    )
+    "error"
+    (pack s)

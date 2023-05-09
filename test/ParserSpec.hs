@@ -18,3 +18,6 @@ spec = do
       parseExpression "-2187" `shouldBe` Right (Number (-2187))
     it "parses string" $ do
       parseExpression "\"Test\"" `shouldBe` Right (String "Test")
+    it "parses boolean" $ do
+      parseExpression "#t" `shouldBe` Right (Bool True)
+      parseExpression "#f" `shouldBe` Right (Bool False)
