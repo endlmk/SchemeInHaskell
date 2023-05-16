@@ -3,7 +3,7 @@
 
 module Parser
   ( parseExpression,
-    LispVal (Atom, Number, String, Bool),
+    LispVal (..),
   )
 where
 
@@ -17,6 +17,7 @@ data LispVal
   | Number Integer
   | String T.Text
   | Bool Bool
+  | Nil
   deriving (Eq, Show)
 
 atom :: Parser LispVal
@@ -48,6 +49,11 @@ parseBool = do
   c <- oneOf "tf"
   return (Bool (c == 't'))
 
+parseNil :: Parser LispVal
+parseNil = do
+  _ <- string "()"
+  return Nil
+
 parseExpression :: String -> Either ParseError LispVal
 parseExpression s =
   parse
@@ -56,6 +62,7 @@ parseExpression s =
         <|> negNumber
         <|> parseString
         <|> parseBool
+        <|> parseNil
     )
     "error"
     (pack s)

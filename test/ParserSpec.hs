@@ -21,3 +21,5 @@ spec = do
     it "parses boolean" $ do
       parseExpression "#t" `shouldBe` Right (Bool True)
       parseExpression "#f" `shouldBe` Right (Bool False)
+    it "parses nil" $ do
+      parseExpression "()" `shouldBe` Right Nil
